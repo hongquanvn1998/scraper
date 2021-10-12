@@ -44,7 +44,7 @@ users = []
 with open(r"Scrapped.csv", encoding='UTF-8') as f:  #Enter your file name
     rows = csv.reader(f,delimiter=",",lineterminator="\n")
     # next(rows, None)
-    for row in islice(rows, 2520, None):
+    for row in islice(rows, 2720, None):
     # for row in islice(rows, 350, None):
     # for row in rows[35:-1]:
         user = {}
@@ -75,18 +75,18 @@ for chat in chats:
     except:
         continue
 
-print('Chọn một nhóm để thêm thành viên: ')
+print('Chon nhom de them thanh vien: ')
 i = 0
 for group in groups:
     print(str(i) + '- ' + group.title)
     i += 1
 
-g_index = input("Nhập một số ")
-target_group = groups[int(g_index)]
+g_index = 1
+target_group = groups[g_index]
 
 target_group_entity = InputPeerChannel(target_group.id, target_group.access_hash)
 
-mode = int(input("Nhập 1 để thêm theo tên người dùng hoặc 2 để thêm theo ID: "))
+mode = 2
 
 n = 0
 success = 0
@@ -96,7 +96,7 @@ limit = 0
 
 for user in users:
     n += 1
-    print('Đã đến số: ',n)
+    print('Da den so: ',n)
     if n % 60 == 0:
         time.sleep(200)
     try:
@@ -108,11 +108,11 @@ for user in users:
         elif mode == 2:
             user_to_add = InputPeerUser(user['id'], user['access_hash'])
         else:
-            sys.exit("Đã chọn chế độ không hợp lệ. Vui lòng thử lại.")
+            sys.exit("Da chon che do khong hop le vui long thu lai.")
         client(InviteToChannelRequest(target_group_entity, [user_to_add]))
         _sleep = random.randint(60, 200)
         success+=1
-        print("Thành công lần thứ {}. Chờ {} giây ...".format(success,_sleep))
+        print("Thanh cong {}. Cho {} seconds ...".format(success,_sleep))
         print("=====================================================.")
         privacy = 0
         limit = 0
@@ -126,8 +126,8 @@ for user in users:
             limit = 0
             _sleep = 600
         failure+=1
-        print("Quá nhiều request. Vui lòng thử lại sau một thời gian.")
-        print("Fail lần thứ {}. Thử lại sau {} seconds".format(failure,_sleep))
+        print("Qua nhieu request. Thu lai sau 1 thoi gian.")
+        print("Fail lan thu {}. Thu lai sau {} seconds".format(failure,_sleep))
         print("=====================================================.")
         time.sleep(_sleep)
     except UserPrivacyRestrictedError:
@@ -139,13 +139,13 @@ for user in users:
             privacy = 0
             _sleep = 200
         failure+=1
-        print("Cài đặt quyền riêng tư của người dùng không cho phép bạn làm điều này. Bỏ qua.")
-        print("Fail lần thứ {}. Chờ {} giây....".format(failure,_sleep))
+        print("Cai dat quyen rieng tu khong cho phep them vao. Bo qua.")
+        print("Fail lan thu {}. Cho {} seconds....".format(failure,_sleep))
         print("=====================================================.")
         time.sleep(_sleep)
     except:
         traceback.print_exc()
         failure+=1
-        print("Fail lần thứ {}. Lỗi không mong đợi".format(failure))
+        print("Fail lan thu {}. Loi khong mong doi".format(failure))
         print("=====================================================.")
         continue
