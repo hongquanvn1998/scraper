@@ -27,7 +27,7 @@ with client:
 client.connect()
 if not client.is_user_authorized():
     client.send_code_request(phone)
-    client.sign_in(phone, input('Nhập mã xác nhận: '))
+    client.sign_in(phone, input('Nhap ma xac nhan: '))
 
 
 chats = []
@@ -57,14 +57,14 @@ for g in groups:
     print(str(i) + '- ' + g.title)
     i+=1
 
-g_index = input("Xin vui lòng! Nhập một số: ")
+g_index = input("Nhap 1 so: ")
 target_group=groups[int(g_index)]
 
-print('Tìm nạp thành viên ...')
+print('Tim nap thanh vien ...')
 all_participants = []
 all_participants = client.get_participants(target_group, aggressive=True)
 
-print('Đang lưu trong tệp ...')
+print('Dang luu ...')
 with open("Scrapped.csv","w",encoding='UTF-8') as f:#Enter your file name.
     writer = csv.writer(f,delimiter=",",lineterminator="\n")
     writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
