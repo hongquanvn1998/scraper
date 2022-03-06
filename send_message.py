@@ -40,4 +40,4 @@ for data in list_phone:
         print(F"Sent to %s with message %s !" % (send_to_channel, message))
         client.disconnect()
         num += 1
-        sleep(300)
+        sleep(600)
