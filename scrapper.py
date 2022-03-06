@@ -17,18 +17,8 @@ import csv
 
 api_id = config.api_id
 api_hash = config.api_hash
-phone = '+84' + config.phone
-client = TelegramClient(phone, api_id, api_hash)
-async def main():
-    # Now you can use all client methods listed below, like for example...
-    await client.send_message('me', 'Hello !!!!')
-with client:
-    client.loop.run_until_complete(main())
-client.connect()
-if not client.is_user_authorized():
-    client.send_code_request(phone)
-    client.sign_in(phone, input('Nhap ma xac nhan: '))
-
+phone = config.phone
+client = TelegramClient("session/" + phone, api_id, api_hash)
 
 chats = []
 last_date = None

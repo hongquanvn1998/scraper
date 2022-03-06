@@ -10,20 +10,19 @@ import config as config
 env = os.environ
 api_id = config.api_id
 api_hash = config.api_hash
-tele_phone = config.tele_phone
+list_phone = config.list_phone
 channel = config.channel
 send_to_channel = config.send_to_channel
-i = 0
+num = 1
 
 
-for data in tele_phone:
-    i += 1
+for data in list_phone:
     phone = data['phone']
     ip = data['ip']
     port = data['port']
     message = ''
-    client = TelegramClient("session/" + phone, api_id, api_hash,
-                            proxy=(python_socks.ProxyType.SOCKS5, ip, port))
+    client = TelegramClient("session/" + phone, api_id, api_hash)
+                            # proxy=(python_socks.ProxyType.SOCKS5, ip, port))
     client.connect()
     if not client.is_user_authorized():
         print(F"Session lỗi!" + phone)
@@ -36,8 +35,9 @@ for data in tele_phone:
         with open(r"question.csv", encoding='UTF-8') as f:
             rows = csv.reader(f, delimiter=",", lineterminator="\n")
             rows = list(rows)
-            message = rows[i][0]
+            message = rows[num][0]
         client.send_message(entity=entity, message=str(message))
-        print(F"Sent to %s with message !" % (send_to_channel, message))
+        print(F"Sent to %s with message %s !" % (send_to_channel, message))
         client.disconnect()
+        num += 1
         sleep(300)
