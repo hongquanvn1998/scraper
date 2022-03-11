@@ -57,4 +57,4 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
             client.disconnect()
             num = 0 if num == len(list_phone) else num+1
             number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
-            sleep(600)
+            sleep(1200)
