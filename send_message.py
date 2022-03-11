@@ -12,7 +12,7 @@ api_id = config.api_id
 api_hash = config.api_hash
 channel = config.channel
 send_to_channel = sys.argv[1]
-file_name = sys.argv[2]
+file_message = sys.argv[2]
 file_session = sys.argv[3]
 file_phone = sys.argv[4]
 num = 0
@@ -31,12 +31,12 @@ with open('proxies.txt') as f:
         proxies.append(proxy)
 
 list_phone = []
-with open('proxies.txt') as f:
+with open('%s' % file_phone) as f:
     lines = f.read().splitlines()
     for line in lines:
         list_phone.append(line)
 
-with open(r"%s" % file_name, encoding='UTF-8') as f:
+with open(r"%s" % file_message, encoding='UTF-8') as f:
     rows = csv.reader(f, delimiter=",", lineterminator="\n")
     for row in rows:
         message = row[0]
