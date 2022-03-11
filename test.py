@@ -1,10 +1,14 @@
 import csv
-
-with open(r"question.csv", encoding='UTF-8') as f:
-    rows = csv.reader(f, delimiter=",", lineterminator="\n")
+lines = list()
+with open(r"Scrapped.csv", encoding='UTF-8') as f:  #Enter your file name
+    rows = csv.reader(f,delimiter=",",lineterminator="\n")
+    output = open('Scrapped_edit.csv', 'wb')
+    writer = csv.writer(output)
+    next(rows, None)
     for row in rows:
-        print(row[0])
-        break
-    # rows = list(rows)
-    # message = rows[3][0]
-    # print(len(rows))
+        if row[0] is not None and len(row[0]) > 0:
+            lines.append(row)
+
+with open(r'Scrapped.csv', 'w') as write_file:
+    writer = csv.writer(write_file)
+    writer.writerows(lines)

@@ -1,0 +1,2 @@
+api_id = 12848611
+api_hash = 4a2e8e46745082e7166b7e7f7f9cdcea

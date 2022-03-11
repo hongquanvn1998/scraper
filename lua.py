@@ -15,7 +15,7 @@ while True:
     else:
         api_id = 2015084
         api_hash = '24e8f34925604e25a9b8d695b21cf333'
-        client = TelegramClient("session/"+phone,api_id,api_hash,proxy=(python_socks.ProxyType.SOCKS5, '127.0.0.1', 4444))
+        client = TelegramClient("session/%s/%s" % (phone,phone),api_id,api_hash)
         channel = ['coinpassion','BinanceVietnamese','vietnamtradecoin']
         client.connect()
         if not client.is_user_authorized():

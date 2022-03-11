@@ -10,38 +10,51 @@ import config as config
 env = os.environ
 api_id = config.api_id
 api_hash = config.api_hash
-list_phone = config.list_phone
 channel = config.channel
-send_to_channel = config.send_to_channel
+send_to_channel = sys.argv[1]
+file_name = sys.argv[2]
+file_session = sys.argv[3]
+file_phone = sys.argv[4]
 num = 0
+number_proxy = 0
 
-with open(r"question.csv", encoding='UTF-8') as f:
+proxies = []
+with open('proxies.txt') as f:
+    lines = f.read().splitlines()
+    for line in lines:
+        proxy = {}
+        arr = line.split(':')
+        proxy['ip'] = arr[0]
+        proxy['port'] = arr[1]
+        proxy['user'] = arr[2]
+        proxy['password'] = arr[3]
+        proxies.append(proxy)
+
+list_phone = []
+with open('proxies.txt') as f:
+    lines = f.read().splitlines()
+    for line in lines:
+        list_phone.append(line)
+
+with open(r"%s" % file_name, encoding='UTF-8') as f:
     rows = csv.reader(f, delimiter=",", lineterminator="\n")
-    # rows = list(rows)
-    # message = rows[num][0]
     for row in rows:
         message = row[0]
-        data = list_phone[num]
-        phone = data['phone']
-        ip = data['ip']
-        port = data['port']
-        message = ''
-        client = TelegramClient("session/%s/%s" % (phone,phone), api_id, api_hash)
-                                # proxy=(python_socks.ProxyType.SOCKS5, ip, port))
+        phone = list_phone[num]
+        get_proxy = proxies[number_proxy]
+        client = TelegramClient("%s/%s/%s" % (file_session,phone,phone), api_id, api_hash,
+                                proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True, get_proxy['user'], get_proxy['password']))
         client.connect()
         if not client.is_user_authorized():
             print(F"Session lỗi!" + phone)
             client.disconnect()
             continue
         else:
-            for i in channel:
-                client(JoinChannelRequest(i))
+            client(JoinChannelRequest(send_to_channel))
             entity = client.get_entity(send_to_channel)
             client.send_message(entity=entity, message=str(message))
             print(F"Sent to %s with message %s !" % (send_to_channel, message))
             client.disconnect()
-            if num == len(list_phone):
-                num = 0
-            else:
-                num += 1
+            num = 0 if num == len(list_phone) else num+1
+            number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
             sleep(300)
