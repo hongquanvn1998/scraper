@@ -42,19 +42,25 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
         message = row[0]
         phone = list_phone[num]
         get_proxy = proxies[number_proxy]
-        client = TelegramClient("%s/%s/%s" % (file_session,phone,phone), api_id, api_hash,
-                                proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True, get_proxy['user'], get_proxy['password']))
-        client.connect()
-        if not client.is_user_authorized():
-            print(F"Session lỗi!" + phone)
-            client.disconnect()
-            continue
-        else:
-            client(JoinChannelRequest(send_to_channel))
-            entity = client.get_entity(send_to_channel)
-            client.send_message(entity=entity, message=str(message))
-            print(F"Sent to %s with message %s !" % (send_to_channel, message))
-            client.disconnect()
-            num = 0 if num == len(list_phone) else num+1
-            number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
-            sleep(1200)
+        try:
+            client = TelegramClient("%s/%s/%s" % (file_session,phone,phone), api_id, api_hash,
+                                    proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True, get_proxy['user'], get_proxy['password']))
+            client.connect()
+            if not client.is_user_authorized():
+                print(F"Session lỗi!" + phone)
+                client.disconnect()
+                continue
+            else:
+                client(JoinChannelRequest(send_to_channel))
+                entity = client.get_entity(send_to_channel)
+                client.send_message(entity=entity, message=str(message))
+                print(F"Sent to %s with message %s !" % (send_to_channel, message))
+                client.disconnect()
+                num = 0 if num == len(list_phone) else num+1
+                number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
+                if send_to_channel == 'coinpassion':
+                    sleep(1200)
+                else:
+                    sleep(600)
+        except:
+            print('Something Error')
