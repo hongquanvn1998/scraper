@@ -69,6 +69,5 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
                     sleep(1200)
                 else:
                     sleep(600)
-        except:
-            print('Something Error')
-            client.disconnect()
+        except Exception as e:
+            print('Something Error: ',e)
