@@ -150,6 +150,7 @@ for user in users:
         print("=====================================================.")
         change_info = False
         time.sleep(_sleep)
+        client.disconnect()
     except PeerFloodError:
         limit+=1
         if limit==10:
@@ -157,7 +158,6 @@ for user in users:
             number_proxy = number_proxy + 1 if number_proxy < len(proxies) else 0
             change_info = True
             limit=0
-            client.disconnect()
         else:
             change_info = False
         _sleep = random.randint(60, 90)
@@ -176,7 +176,6 @@ for user in users:
             number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
             change_info = True
             flood=0
-            client.disconnect()
         else:
             change_info = False
         _sleep = random.randint(25, 30)
