@@ -43,7 +43,7 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
         phone = list_phone[num]
         get_proxy = proxies[number_proxy]
         try:
-            if file_session == 'FanpadOfficial':
+            if file_session == 'fanpad':
                 client = TelegramClient("%s/%s" % (file_session, phone), api_id, api_hash,
                                         proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
                                                get_proxy['user'], get_proxy['password']))
