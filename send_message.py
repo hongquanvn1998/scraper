@@ -43,8 +43,14 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
         phone = list_phone[num]
         get_proxy = proxies[number_proxy]
         try:
-            client = TelegramClient("%s/%s/%s" % (file_session,phone,phone), api_id, api_hash,
-                                    proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True, get_proxy['user'], get_proxy['password']))
+            if file_session == 'FanpadOfficial':
+                client = TelegramClient("%s/%s" % (file_session, phone), api_id, api_hash,
+                                        proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
+                                               get_proxy['user'], get_proxy['password']))
+            else:
+                client = TelegramClient("%s/%s/%s" % (file_session, phone, phone), api_id, api_hash,
+                                        proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
+                                               get_proxy['user'], get_proxy['password']))
             client.connect()
             if not client.is_user_authorized():
                 print(F"Session lỗi!" + phone)
@@ -56,11 +62,13 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
                 client.send_message(entity=entity, message=str(message))
                 print(F"Sent to %s with message %s !" % (send_to_channel, message))
                 client.disconnect()
-                num = 0 if num == len(list_phone) else num+1
+                num = 0 if num == len(list_phone) - 1 else num + 1
                 number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
+                client.disconnect()
                 if send_to_channel == 'coinpassion':
                     sleep(1200)
                 else:
                     sleep(600)
         except:
             print('Something Error')
+            client.disconnect()

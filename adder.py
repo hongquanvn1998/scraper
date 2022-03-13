@@ -157,6 +157,7 @@ for user in users:
             number_proxy = number_proxy + 1 if number_proxy < len(proxies) else 0
             change_info = True
             limit=0
+            client.disconnect()
         else:
             change_info = False
         _sleep = random.randint(60, 90)
@@ -172,9 +173,10 @@ for user in users:
         flood+=1
         if flood==5:
             number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
-            number_proxy = number_proxy + 1 if number_proxy < len(proxies) else 0
+            number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
             change_info = True
             flood=0
+            client.disconnect()
         else:
             change_info = False
         _sleep = random.randint(25, 30)
