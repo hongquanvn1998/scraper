@@ -54,6 +54,8 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
             client.connect()
             if not client.is_user_authorized():
                 print(F"Session lỗi!" + phone)
+                num = 0 if num == len(list_phone) - 1 else num + 1
+                number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
                 client.disconnect()
                 continue
             else:
