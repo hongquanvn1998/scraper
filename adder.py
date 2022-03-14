@@ -226,5 +226,7 @@ async def __main__():
             print("=====================================================.")
             time.sleep(_sleep)
             continue
-
-asyncio.run(__main__())
+main_func = __main__()
+# asyncio.run(__main__())
+loop = asyncio.get_event_loop()
+loop.run_until_complete(main_func)
