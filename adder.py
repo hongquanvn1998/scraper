@@ -1,10 +1,10 @@
 print ("")
 print ("++++++---++++++++++++---++++++++++++---++++++++++++---++++++++++++---++++++")
 print ("+  ____                                    ____ _           _    _         + ")
-print ("- / ___|  __ _ _ __ ___   ___  ___ _ __   / ___| |__   ___ | | _| |_   _   -  ")
-print ("+ \___ \ / _` | '_ ` _ \ / _ \/ _ \ '__| | |   | '_ \ / _ \| |/ / | | |    + ")
-print ("-  ___) | (_| | | | | | |  __/  __/ |    | |___| | | | (_) |   <| | |_| |  -  ")
-print ("+ |____/ \__,_|_| |_| |_|\___|\___|_|     \____|_| |_|\___/|_|\_\_|\__, |  +  ")
+print ("- / ___\  __ _ _ __ ___   ___  ___ _ __   / ___| |__   ___ | | _| |_   _   -  ")
+print ("+ |____ | / _` | '_ ` _ \ / _ \/ _ \ '__| | |   | '_ \ / _ \| |/ / | | |    + ")
+print ("- |____ | | (_| | | | | | |  __/  __/ |    | |___| | | | (_) |   <| | |_| |  -  ")
+print ("+ \____/ \__,_|_| |_| |_|\___|\___|_|     \____|_| |_|\___/|_|\_\_|\__, |  +  ")
 print ("-                                                                  |___/   -  ")
 print ("++++++---++++++++++++---++++++++++++---++++++++++++---++++++++++++---++++++")
 print ("")
@@ -101,12 +101,12 @@ async def __main__():
             channel = config.channel[0]
             client = TelegramClient("session/%s/%s" % (phone, phone), api_id, api_hash,
                                     proxy=(ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True, get_proxy['user'], get_proxy['password']))
-
+            await client.start()
             await client.connect()
             is_authorized = await client.is_user_authorized()
             if not is_authorized:
                 await client.send_code_request(phone)
-                for message in client.get_messages(777000, limit=1):
+                for message in await client.get_messages(777000, limit=1):
                     msg = message.message
                     you_code = msg.split()[2].rstrip('.')
                 await client.sign_in(phone, input(you_code))
@@ -226,7 +226,7 @@ async def __main__():
             print("=====================================================.")
             time.sleep(_sleep)
             continue
-main_func = __main__()
-# asyncio.run(__main__())
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main_func)
+asyncio.run(__main__())
+# main_func = __main__()
+# loop = asyncio.get_event_loop()
+# loop.run_until_complete(main_func)
