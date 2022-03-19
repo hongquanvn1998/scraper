@@ -205,7 +205,7 @@ async def __main__():
                   .format(privacy, _sleep, limit, flood, failure+privacy, success))
             print("=====================================================.")
             time.sleep(_sleep)
-        except:
+        except Exception as e:
             traceback.print_exc()
             failure += 1
             if failure == 200:
@@ -217,16 +217,19 @@ async def __main__():
                 change_info = False
             _sleep = random.randint(15, 20)
             change_info = False
-            print("Fail lan thu {}. Loi khong mong doi. Thu lai sau {} seconds."
+            print("Fail lan thu {}. {}. Thu lai sau {} seconds."
                   "\n limit={} "
                   "\n flood={}"
                   "\n fail+private={} "
                   "\n success={}"
-                  .format(failure, _sleep, limit, flood, failure+privacy, success))
+                  .format(failure, e, _sleep, limit, flood, failure+privacy, success))
             print("=====================================================.")
             time.sleep(_sleep)
             continue
-asyncio.run(__main__())
+# asyncio.run(__main__())
 # main_func = __main__()
 # loop = asyncio.get_event_loop()
 # loop.run_until_complete(main_func)
+loop = asyncio.new_event_loop()
+loop.run_until_complete(__main__())
+loop.close()
