@@ -3,8 +3,8 @@
 45.136.231.43:7099:awgxcwqp:wozlv8hq8l1v
 45.137.60.112:6640:awgxcwqp:wozlv8hq8l1v
 45.136.228.85:6140:awgxcwqp:wozlv8hq8l1v
-45.134.184.43:6079:awgxcwqp:wozlv8hq8l1v
 45.140.13.124:9137:awgxcwqp:wozlv8hq8l1v
 45.136.231.85:7141:awgxcwqp:wozlv8hq8l1v
-45.134.184.201:6237:awgxcwqp:wozlv8hq8l1v
 193.8.56.159:9223:awgxcwqp:wozlv8hq8l1v
+45.140.13.112:9125:awgxcwqp:wozlv8hq8l1v
+45.142.28.20:8031:awgxcwqp:wozlv8hq8l1v
