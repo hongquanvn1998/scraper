@@ -156,7 +156,6 @@ async def __main__():
             print("=====================================================.")
             change_info = False
             time.sleep(_sleep)
-            await client.disconnect()
         except PeerFloodError:
             limit+=1
             if limit==10:
