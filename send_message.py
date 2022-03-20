@@ -62,8 +62,7 @@ with open(r"%s" % file_message, encoding='UTF-8') as f:
                 client(JoinChannelRequest(send_to_channel))
                 entity = client.get_entity(send_to_channel)
                 client.send_message(entity=entity, message=str(message))
-                print(F"Sent to %s with message %s !" % (send_to_channel, message))
-                client.disconnect()
+                print(F"%s: Sent to %s with message %s !" % (phone, send_to_channel, message))
                 num = 0 if num == len(list_phone) - 1 else num + 1
                 number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
                 client.disconnect()
