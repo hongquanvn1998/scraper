@@ -158,13 +158,6 @@ async def __main__():
             time.sleep(_sleep)
         except PeerFloodError:
             limit+=1
-            if limit==10:
-                number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
-                number_proxy = number_proxy + 1 if number_proxy < len(proxies) else 0
-                change_info = True
-                limit=0
-            else:
-                change_info = False
             _sleep = random.randint(60, 90)
             print("Qua nhieu request. Thu lai sau 1 thoi gian.")
             print("Limit lan thu {}. Thu lai sau {} seconds"
@@ -173,16 +166,16 @@ async def __main__():
                   "\n success={}"
                   .format(limit, _sleep, flood, failure+privacy, success))
             print("=====================================================.")
-            time.sleep(_sleep)
-        except FloodWaitError:
-            flood+=1
-            if flood==5:
+            if limit==10:
                 number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
                 number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
                 change_info = True
-                flood=0
+                limit=0
             else:
                 change_info = False
+            time.sleep(_sleep)
+        except FloodWaitError:
+            flood+=1
             _sleep = random.randint(25, 30)
             print("Flood lan thu {}. Thu lai sau {} seconds"
                   "\n limit={}"
@@ -190,6 +183,13 @@ async def __main__():
                   "\n success={}"
                   .format(flood, _sleep, limit, failure+privacy, success))
             print("=====================================================.")
+            if flood==5:
+                number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
+                number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
+                change_info = True
+                flood=0
+            else:
+                change_info = False
             time.sleep(_sleep)
         except UserPrivacyRestrictedError:
             privacy += 1
@@ -207,15 +207,7 @@ async def __main__():
         except Exception as e:
             traceback.print_exc()
             failure += 1
-            if failure == 200:
-                number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
-                number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
-                change_info = True
-                failure = 0
-            else:
-                change_info = False
             _sleep = random.randint(15, 20)
-            change_info = False
             print("Fail lan thu {}. {}. Thu lai sau {} seconds."
                   "\n limit={} "
                   "\n flood={}"
@@ -223,6 +215,13 @@ async def __main__():
                   "\n success={}"
                   .format(failure, e, _sleep, limit, flood, failure+privacy, success))
             print("=====================================================.")
+            if failure == 200:
+                number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
+                number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
+                change_info = True
+                failure = 0
+            else:
+                change_info = False
             time.sleep(_sleep)
             continue
 # asyncio.run(__main__())
