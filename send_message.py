@@ -71,6 +71,8 @@ async def __main__(_list_phone, _proxies):
                     await client.disconnect()
                     if send_to_channel == 'coinpassion':
                         sleep(1200)
+                    elif send_to_channel == 'fulldaoofficial':
+                        sleep(1800)
                     else:
                         sleep(600)
             except Exception as e:
