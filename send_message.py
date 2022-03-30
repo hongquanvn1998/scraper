@@ -70,7 +70,7 @@ async def __main__(_list_phone, _proxies):
                     num = 0 if num == len(_list_phone) - 1 else num + 1
                     number_proxy = number_proxy + 1 if number_proxy < len(_proxies) - 1 else 0
                     await client.disconnect()
-                    sleep(timeout)
+                    sleep(1800)
             except Exception as e:
                 print('%s Something Error: %s' % (_list_phone[num], e))
                 num = 0 if num == len(_list_phone) - 1 else num + 1
