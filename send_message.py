@@ -15,6 +15,7 @@ send_to_channel = sys.argv[1]
 file_message = sys.argv[2]
 file_session = sys.argv[3]
 file_phone = sys.argv[4]
+timeout = sys.argv[5]
 
 proxies = []
 with open('proxies.txt') as f:
@@ -69,12 +70,7 @@ async def __main__(_list_phone, _proxies):
                     num = 0 if num == len(_list_phone) - 1 else num + 1
                     number_proxy = number_proxy + 1 if number_proxy < len(_proxies) - 1 else 0
                     await client.disconnect()
-                    if send_to_channel == 'coinpassion':
-                        sleep(1200)
-                    elif send_to_channel == 'fulldaoofficial':
-                        sleep(1800)
-                    else:
-                        sleep(600)
+                    sleep(timeout)
             except Exception as e:
                 print('%s Something Error: %s' % (_list_phone[num], e))
                 num = 0 if num == len(_list_phone) - 1 else num + 1
