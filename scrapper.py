@@ -76,7 +76,7 @@ async def __main__():
     while while_condition:
 
         participants = await client(
-            GetParticipantsRequest(channel=channel_username, offset=offset, filter=my_filter, limit=35000, hash=0))
+            GetParticipantsRequest(channel=channel_username, offset=offset, filter=my_filter, limit=200, hash=0))
 
         all_participants.extend(participants.users)
         offset += len(participants.users)
@@ -92,21 +92,21 @@ async def __main__():
         writer = csv.writer(f,delimiter=",",lineterminator="\n")
         writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
         for user in all_participants:
-            if user.username is not None and len(user.username) > 0:
-                if user.username:
-                    username= user.username
-                else:
-                    username= ""
-                if user.first_name:
-                    first_name= user.first_name
-                else:
-                    first_name= ""
-                if user.last_name:
-                    last_name= user.last_name
-                else:
-                    last_name= ""
-                name= (first_name + ' ' + last_name).strip()
-                writer.writerow([username,user.id,user.access_hash,name])
+            # if user.username is not None and len(user.username) > 0:
+            if user.username:
+                username= user.username
+            else:
+                username= ""
+            if user.first_name:
+                first_name= user.first_name
+            else:
+                first_name= ""
+            if user.last_name:
+                last_name= user.last_name
+            else:
+                last_name= ""
+            name= (first_name + ' ' + last_name).strip()
+            writer.writerow([username,user.id,user.access_hash,name])
     print('Members scraped successfully.......')
     print('Happy Hacking......')
 loop = asyncio.new_event_loop()
