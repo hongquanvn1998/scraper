@@ -22,6 +22,10 @@ import traceback
 import time
 import random
 import asyncio
+from datetime import datetime, timezone, timedelta
+
+now_UTC = datetime.now(tz=timezone.utc)
+now_local = datetime.now() + timedelta(hours=7)
 
 api_id = config.api_id
 api_hash = config.api_hash
@@ -152,19 +156,20 @@ async def __main__():
             await client(InviteToChannelRequest(target_group_entity, [user_to_add]))
             _sleep = random.randint(15, 20)
             success+=1
-            print("Thanh cong {}. Cho {} seconds ...".format(success,_sleep))
+            print("Time: {}\nThanh cong {}. Cho {} seconds ...".format(now_local,success,_sleep))
             print("=====================================================.")
             change_info = False
             time.sleep(_sleep)
         except PeerFloodError:
             limit+=1
             _sleep = random.randint(60, 90)
-            print("Qua nhieu request. Thu lai sau 1 thoi gian.")
+            print(" Qua nhieu request. Thu lai sau 1 thoi gian.")
             print("Limit lan thu {}. Thu lai sau {} seconds"
+                  "Time: {}\n"
                   "\n flood={}"
                   "\n fail+private={} "
                   "\n success={}"
-                  .format(limit, _sleep, flood, failure+privacy, success))
+                  .format(now_local, limit, _sleep, flood, failure+privacy, success))
             print("=====================================================.")
             if limit==10:
                 number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
@@ -178,10 +183,11 @@ async def __main__():
             flood+=1
             _sleep = random.randint(25, 30)
             print("Flood lan thu {}. Thu lai sau {} seconds"
+                  "Time: {}\n"
                   "\n limit={}"
                   "\n fail+private={} "
                   "\n success={}"
-                  .format(flood, _sleep, limit, failure+privacy, success))
+                  .format(now_local,flood, _sleep, limit, failure+privacy, success))
             print("=====================================================.")
             if flood==5:
                 number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
@@ -197,11 +203,12 @@ async def __main__():
             change_info = False
             print("Cai dat quyen rieng tu khong cho phep them vao. Bo qua.")
             print("Privacy lan thu {}. Thu lai sau {} seconds. "
+                  "Time: {}\n"
                   "\n limit={} "
                   "\n flood={}"
                   "\n fail+private={} "
                   "\n success={}"
-                  .format(privacy, _sleep, limit, flood, failure+privacy, success))
+                  .format(privacy, _sleep, now_local, limit, flood, failure+privacy, success))
             print("=====================================================.")
             time.sleep(_sleep)
         except Exception as e:
@@ -209,11 +216,12 @@ async def __main__():
             failure += 1
             _sleep = random.randint(15, 20)
             print("Fail lan thu {}. {}. Thu lai sau {} seconds."
+                  "Time: {}\n"
                   "\n limit={} "
                   "\n flood={}"
                   "\n fail+private={} "
                   "\n success={}"
-                  .format(failure, e, _sleep, limit, flood, failure+privacy, success))
+                  .format(failure, e, _sleep, limit, now_local, flood, failure+privacy, success))
             print("=====================================================.")
             if failure == 200:
                 number_phone = number_phone + 1 if number_phone < len(config.list_phone) else 0
