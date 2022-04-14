@@ -22,6 +22,7 @@ import traceback
 import time
 import random
 import asyncio
+import python_socks
 from datetime import datetime, timezone, timedelta
 
 now_UTC = datetime.now(tz=timezone.utc)
@@ -29,9 +30,14 @@ now_local = datetime.now() + timedelta(hours=7)
 
 api_id = config.api_id
 api_hash = config.api_hash
+send_to_channel = sys.argv[1]
+file_member = sys.argv[2]
+file_session = sys.argv[3]
+file_phone = sys.argv[4]
+
 
 users = []
-with open(r"Scrapped.csv", encoding='UTF-8') as f:  #Enter your file name
+with open(r"{}.csv".format(file_member), encoding='UTF-8') as f:  #Enter your file name
     rows = csv.reader(f,delimiter=",",lineterminator="\n")
     next(rows, None)
     for row in rows:
@@ -53,6 +59,12 @@ with open('proxies.txt') as f:
         proxy['user'] = arr[2]
         proxy['password'] = arr[3]
         proxies.append(proxy)
+
+list_phone = []
+with open('%s' % file_phone) as f:
+    lines = f.read().splitlines()
+    for line in lines:
+        list_phone.append(line)
 
 # chats = []
 # last_date = None
@@ -97,17 +109,27 @@ async def __main__():
     number_phone = 0
     number_proxy = 0
     change_info = True
-    target_group_entity = InputPeerChannel(1644207966, 4418609512849097208)
     for user in users:
         if change_info is True:
-            phone = config.list_phone[number_phone]
+            phone = list_phone[number_phone]
+
             get_proxy = proxies[number_proxy]
-            channel = config.channel[0]
-            client = TelegramClient("session/%s/%s" % (phone, phone), api_id, api_hash,
-                                    proxy=(ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True, get_proxy['user'], get_proxy['password']))
+            channel = send_to_channel
+            if file_session == 'fanpad':
+                client = TelegramClient("%s/%s" % (file_session, phone), api_id, api_hash,
+                                        proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
+                                               get_proxy['user'], get_proxy['password']))
+            else:
+                client = TelegramClient("%s/%s/%s" % (file_session, phone, phone), api_id, api_hash,
+                                        proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
+                                               get_proxy['user'], get_proxy['password']))
+            print(phone)
+            # client = TelegramClient("session/%s/%s" % (phone, phone), api_id, api_hash,
+            #                         proxy=(ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True, get_proxy['user'], get_proxy['password']))
             await client.start()
             await client.connect()
             is_authorized = await client.is_user_authorized()
+            print(is_authorized)
             if not is_authorized:
                 await client.send_code_request(phone)
                 for message in await client.get_messages(777000, limit=1):
@@ -137,7 +159,8 @@ async def __main__():
                     continue
 
             for group in groups:
-                if group.id == 1644207966:
+                print(group)
+                if group.username == channel:
                     target_group_entity = InputPeerChannel(group.id, group.access_hash)
 
         n += 1

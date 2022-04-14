@@ -21,6 +21,8 @@ from python_socks import ProxyType
 import config as config
 import csv
 
+file_member = sys.argv[1]
+
 async def __main__():
     api_id = config.api_id
     api_hash = config.api_hash
@@ -88,7 +90,7 @@ async def __main__():
     time.sleep(1)
 
     print('Dang luu ...')
-    with open("Scrapped.csv","w",encoding='UTF-8') as f:#Enter your file name.
+    with open("{}.csv".format(file_member),"w",encoding='UTF-8') as f:#Enter your file name.
         writer = csv.writer(f,delimiter=",",lineterminator="\n")
         writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
         for user in all_participants:
