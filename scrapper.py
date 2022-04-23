@@ -28,7 +28,7 @@ async def __main__():
     api_hash = config.api_hash
     phone = '+84783807639'
     client = TelegramClient("session/%s/%s" % (phone,phone), api_id, api_hash,
-                                    proxy=(ProxyType.SOCKS5, '209.127.191.180', 9279, True, 'awgxcwqp', 'wozlv8hq8l1v'))
+                                    proxy=(ProxyType.SOCKS5, '209.127.138.185', 7282, True, 'akoujkvn', 'haejin8zcyag'))
     channel_username = sys.argv[1]
     await client.connect()
     if not await client.is_user_authorized():
@@ -94,21 +94,21 @@ async def __main__():
         writer = csv.writer(f,delimiter=",",lineterminator="\n")
         writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
         for user in all_participants:
-            # if user.username is not None and len(user.username) > 0:
-            if user.username:
-                username= user.username
-            else:
-                username= ""
-            if user.first_name:
-                first_name= user.first_name
-            else:
-                first_name= ""
-            if user.last_name:
-                last_name= user.last_name
-            else:
-                last_name= ""
-            name= (first_name + ' ' + last_name).strip()
-            writer.writerow([username,user.id,user.access_hash,name])
+            if user.username is not None and len(user.username) > 0:
+                if user.username:
+                    username= user.username
+                else:
+                    username= ""
+                if user.first_name:
+                    first_name= user.first_name
+                else:
+                    first_name= ""
+                if user.last_name:
+                    last_name= user.last_name
+                else:
+                    last_name= ""
+                name= (first_name + ' ' + last_name).strip()
+                writer.writerow([username,user.id,user.access_hash,name])
     print('Members scraped successfully.......')
     print('Happy Hacking......')
 loop = asyncio.new_event_loop()
