@@ -37,7 +37,7 @@ file_phone = sys.argv[4]
 
 
 users = []
-with open(r"{}.csv".format(file_member), encoding='UTF-8') as f:  #Enter your file name
+with open(r"scrapped/{}.csv".format(file_member), encoding='UTF-8') as f:  #Enter your file name
     rows = csv.reader(f,delimiter=",",lineterminator="\n")
     next(rows, None)
     for row in rows:
@@ -49,7 +49,7 @@ with open(r"{}.csv".format(file_member), encoding='UTF-8') as f:  #Enter your fi
         users.append(user)
 
 proxies = []
-with open('proxies.txt') as f:
+with open('proxies/%s.txt' % file_session) as f:
     lines = f.read().splitlines()
     for line in lines:
         proxy = {}
@@ -61,7 +61,7 @@ with open('proxies.txt') as f:
         proxies.append(proxy)
 
 list_phone = []
-with open('%s' % file_phone) as f:
+with open('phone_add_member/%s' % file_phone) as f:
     lines = f.read().splitlines()
     for line in lines:
         list_phone.append(line)

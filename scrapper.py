@@ -90,7 +90,7 @@ async def __main__():
     time.sleep(1)
 
     print('Dang luu ...')
-    with open("{}.csv".format(file_member),"w",encoding='UTF-8') as f:#Enter your file name.
+    with open("scrapped/{}.csv".format(file_member),"w",encoding='UTF-8') as f:#Enter your file name.
         writer = csv.writer(f,delimiter=",",lineterminator="\n")
         writer.writerow(['username','user id', 'access hash','name','group', 'group id'])
         for user in all_participants:

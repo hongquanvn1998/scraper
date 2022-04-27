@@ -18,7 +18,7 @@ file_phone = sys.argv[4]
 timeout = sys.argv[5]
 
 proxies = []
-with open('proxies.txt') as f:
+with open('proxies/%s.txt' % file_session) as f:
     lines = f.read().splitlines()
     for line in lines:
         proxy = {}
@@ -30,7 +30,7 @@ with open('proxies.txt') as f:
         proxies.append(proxy)
 
 list_phone = []
-with open('%s' % file_phone) as f:
+with open('phone_messenge/%s' % file_phone) as f:
     lines = f.read().splitlines()
     for line in lines:
         list_phone.append(line)
@@ -39,7 +39,7 @@ with open('%s' % file_phone) as f:
 async def __main__(_list_phone, _proxies):
     num = 0
     number_proxy = 0
-    with open(r"%s" % file_message, encoding='UTF-8') as f:
+    with open(r"question/%s" % file_message, encoding='UTF-8') as f:
         rows = csv.reader(f, delimiter=",", lineterminator="\n")
         for row in rows:
             message = row[0]
