@@ -4,12 +4,6 @@ import time
 
 print ("")
 print ("++++++---++++++++++++---++++++++++++---++++++++++++---++++++++++++---++++++")
-print ("+  ____                                    ____ _           _    _         + ")
-print ("- / ___|  __ _ _ __ ___   ___  ___ _ __   / ___| |__   ___ | | _| |_   _   -  ")
-print ("+ \___ \ / _` | '_ ` _ \ / _ \/ _ \ '__| | |   | '_ \ / _ \| |/ / | | |    + ")
-print ("-  ___) | (_| | | | | | |  __/  __/ |    | |___| | | | (_) |   <| | |_| |  -  ")
-print ("+ |____/ \__,_|_| |_| |_|\___|\___|_|     \____|_| |_|\___/|_|\_\_|\__, |  +  ")
-print ("-                                                                  |___/   -  ")
 print ("++++++---++++++++++++---++++++++++++---++++++++++++---++++++++++++---++++++")
 print ("")
 
@@ -26,9 +20,9 @@ file_member = sys.argv[1]
 async def __main__():
     api_id = config.api_id
     api_hash = config.api_hash
-    phone = '+84783807639'
-    client = TelegramClient("session/%s/%s" % (phone,phone), api_id, api_hash,
-                                    proxy=(ProxyType.SOCKS5, '209.127.138.185', 7282, True, 'akoujkvn', 'haejin8zcyag'))
+    phone = '+840584977673'
+    client = TelegramClient("session/%s" % (phone), api_id, api_hash,
+                                    proxy=(ProxyType.SOCKS5, '104.144.99.152', 7185, True, 'akoujkvn', 'haejin8zcyag'))
     channel_username = sys.argv[1]
     await client.connect()
     if not await client.is_user_authorized():
