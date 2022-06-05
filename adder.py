@@ -115,7 +115,7 @@ async def __main__():
 
             get_proxy = proxies[number_proxy]
             channel = send_to_channel
-            if file_session == 'fanpad':
+            if file_session == 'fanpad' or file_session == 'session':
                 client = TelegramClient("%s/%s" % (file_session, phone), api_id, api_hash,
                                         proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
                                                get_proxy['user'], get_proxy['password']))
