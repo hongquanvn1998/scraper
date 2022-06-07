@@ -20,14 +20,17 @@ file_member = sys.argv[1]
 async def __main__():
     api_id = config.api_id
     api_hash = config.api_hash
-    phone = '+840584977673'
+    phone = '+84334940982'
     client = TelegramClient("session/%s" % (phone), api_id, api_hash,
-                                    proxy=(ProxyType.SOCKS5, '104.144.99.152', 7185, True, 'akoujkvn', 'haejin8zcyag'))
+                                    proxy=(ProxyType.SOCKS5, '191.102.158.94', 8158, True, 'akoujkvn', 'haejin8zcyag'))
     channel_username = sys.argv[1]
     await client.connect()
     if not await client.is_user_authorized():
-        await client.send_code_request(phone)
-        await client.sign_in(phone, input('40779'))
+        # await client.send_code_request(phone)
+        # await client.sign_in(phone, input('40779'))
+        print(F"Session lỗi!" + phone)
+        await client.disconnect()
+        return
     await client(JoinChannelRequest(channel_username))
     chats = []
     last_date = None
