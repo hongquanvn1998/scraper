@@ -22,7 +22,7 @@ async def __main__():
     api_hash = config.api_hash
     phone = '+84334940982'
     client = TelegramClient("session/%s" % (phone), api_id, api_hash,
-                                    proxy=(ProxyType.SOCKS5, '191.102.158.94', 8158, True, 'akoujkvn', 'haejin8zcyag'))
+                                    proxy=(ProxyType.SOCKS5, '141.98.133.26', 7402, True, 'akoujkvn', 'haejin8zcyag'))
     channel_username = sys.argv[1]
     await client.connect()
     if not await client.is_user_authorized():
