@@ -159,7 +159,7 @@ async def __main__():
                     continue
 
             for group in groups:
-                if group.username == channel:
+                if group and group.username == channel:
                     target_group_entity = InputPeerChannel(group.id, group.access_hash)
 
         n += 1
