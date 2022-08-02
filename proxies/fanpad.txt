@@ -1,6 +1,3 @@
-144.168.137.113:8655:akoujkvn:haejin8zcyag
-45.57.168.99:7103:akoujkvn:haejin8zcyag
-198.154.92.157:9227:akoujkvn:haejin8zcyag
 2.56.119.123:5104:akoujkvn:haejin8zcyag
 107.152.170.97:9148:akoujkvn:haejin8zcyag
 154.16.243.3:6147:akoujkvn:haejin8zcyag
