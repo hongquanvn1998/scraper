@@ -159,8 +159,12 @@ async def __main__():
                     continue
 
             for group in groups:
-                if group and group.username == channel:
-                    target_group_entity = InputPeerChannel(group.id, group.access_hash)
+                try:
+                    if group and group.username == channel:
+                        target_group_entity = InputPeerChannel(group.id, group.access_hash)
+                except:
+                    continue
+                
 
         n += 1
         print('Da den so: %s\n User: %s \nPhone: %s'%(n, user['username'], phone))
