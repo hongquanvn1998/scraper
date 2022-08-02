@@ -1,10 +1,3 @@
-45.83.143.67:6105:akoujkvn:haejin8zcyag
-23.254.90.153:8193:akoujkvn:haejin8zcyag
-194.5.153.92:7457:akoujkvn:haejin8zcyag
-84.21.189.182:5829:akoujkvn:haejin8zcyag
-45.88.163.139:5919:akoujkvn:haejin8zcyag
-171.22.133.25:7284:akoujkvn:haejin8zcyag
-168.205.161.53:6115:akoujkvn:haejin8zcyag
 23.229.125.109:9138:akoujkvn:haejin8zcyag
 23.236.168.27:8575:akoujkvn:haejin8zcyag
 168.205.161.110:6172:akoujkvn:haejin8zcyag
