@@ -41,11 +41,12 @@ async def __main__(_list_phone, _proxies):
     number_proxy = 0
     number_row = 0
     with open(r"question/%s" % file_message, encoding='UTF-8') as f:
-        rows = csv.reader(f, delimiter=",", lineterminator="\n")
+        rows = list(csv.reader(f, delimiter=",", lineterminator="\n"))
         # for row in rows:
         while True:
-            row = rows[number_row]
-            message = row[0]
+            # row = rows[number_row]
+            # message = row[0]
+            message = rows[number_row][0]
             phone = _list_phone[num]
             get_proxy = _proxies[number_proxy]
             try:
