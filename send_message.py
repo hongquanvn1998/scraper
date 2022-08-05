@@ -39,9 +39,12 @@ with open('phone_messenge/%s' % file_phone) as f:
 async def __main__(_list_phone, _proxies):
     num = 0
     number_proxy = 0
+    number_row = 0
     with open(r"question/%s" % file_message, encoding='UTF-8') as f:
         rows = csv.reader(f, delimiter=",", lineterminator="\n")
-        for row in rows:
+        # for row in rows:
+        while True:
+            row = rows[number_row]
             message = row[0]
             phone = _list_phone[num]
             get_proxy = _proxies[number_proxy]
@@ -60,6 +63,7 @@ async def __main__(_list_phone, _proxies):
                     print(F"Session lỗi!" + phone)
                     num = 0 if num == len(_list_phone) - 1 else num + 1
                     number_proxy = number_proxy + 1 if number_proxy < len(_proxies) - 1 else 0
+                    number_row = number_row + 1 if number_row < len(rows) - 1 else 0
                     await client.disconnect()
                     continue
                 else:
@@ -69,12 +73,14 @@ async def __main__(_list_phone, _proxies):
                     print(F"%s: Sent to %s with message %s !" % (phone, send_to_channel, message))
                     num = 0 if num == len(_list_phone) - 1 else num + 1
                     number_proxy = number_proxy + 1 if number_proxy < len(_proxies) - 1 else 0
+                    number_row = number_row + 1 if number_row < len(rows) - 1 else 0
                     await client.disconnect()
                     sleep(1800)
             except Exception as e:
                 print('%s Something Error: %s' % (_list_phone[num], e))
                 num = 0 if num == len(_list_phone) - 1 else num + 1
-                number_proxy = number_proxy + 1 if number_proxy < len(_proxies) - 1 else 0
+                number_row = number_row + 1 if number_row < len(_proxies) - 1 else 0
+                number_proxy = number_proxy + 1 if number_proxy < len(rows) - 1 else 0
 
 loop = asyncio.new_event_loop()
 loop.run_until_complete(__main__(list_phone,proxies))

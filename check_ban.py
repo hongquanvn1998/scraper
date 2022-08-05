@@ -2,13 +2,14 @@ import sys
 
 import python_socks
 import config as config
+import shutil
 
 try:
     from random import choice
     from requests import get
     from time import sleep
     from json import load, loads, dump, decoder
-    from os import system, remove
+    from os import system, remove, rmdir, path as pth
     from sys import exit
     from telethon.sync import TelegramClient
     from telethon.errors import rpcerrorlist, SessionPasswordNeededError, PhoneNumberUnoccupiedError
@@ -22,7 +23,7 @@ api_id = config.api_id
 api_hash = config.api_hash
 
 list_phone = []
-with open('phone_messenge/%s' % file_phone) as f:
+with open('phone_old/%s' % file_phone) as f:
     lines = f.read().splitlines()
     for line in lines:
         list_phone.append(line)
@@ -53,35 +54,59 @@ class bcolors:
 def check_ban():
     list = []
     number_proxy = 0
-    with open('phone_messenge/%s' % file_phone) as f:
+    with open('phone_old/%s' % file_phone) as f:
         d = f.read().splitlines()
     for i in d:
         print(f"day la i: {i}")
         get_proxy = proxies[number_proxy]
-        client = TelegramClient(f"{file_session}/{i}.session", api_id, api_hash,
-        proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
-                                                   get_proxy['user'], get_proxy['password'])
-        )
-        client.connect()
-        if not client.is_user_authorized():
-            try:
-                client.send_code_request(i)
-            except rpcerrorlist.PhoneNumberBannedError:
-                print(bcolors.FAIL+f"{i}: Banned"+bcolors.ENDC)
+        try:
+            if file_session == 'fanpad':
+                client = TelegramClient(f"{file_session}/{i}.session", api_id, api_hash,
+                    proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
+                                                            get_proxy['user'], get_proxy['password'])
+                )
+            else:
+                client = TelegramClient(f"{file_session}/{i}/{i}.session", api_id, api_hash,
+                    proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
+                                                            get_proxy['user'], get_proxy['password'])
+                )
+            client.connect()
+            if not client.is_user_authorized():
+                try:
+                    client.send_code_request(i)
+                except rpcerrorlist.PhoneNumberBannedError:
+                    print(bcolors.FAIL+f"{i}: Banned"+bcolors.ENDC)
+                    client.disconnect()
+                    if file_session == 'fanpad':
+                        # remove(f"{file_session}/{i}.session")
+                        shutil.rmtree(f"{file_session}/{i}.session", ignore_errors=True)
+                    else:
+                        directory = f"{i}"
+                        parent = f"{file_session}/"
+                        path = pth.join(parent, directory)
+                        shutil.rmtree(path, ignore_errors=True)
+                    number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
+            else:
+                print(bcolors.OKGREEN+f"{i}: Active"+bcolors.ENDC)
+                list.append(i)
                 client.disconnect()
-                remove(f"{file_session}/{i}.session")
-                number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
-        else:
-            print(bcolors.OKGREEN+f"{i}: Active"+bcolors.ENDC)
-            list.append(i)
-            client.disconnect()
-        number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
+            number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
+        except:
+            if file_session == 'fanpad':
+                # remove(f"{file_session}/{i}.session")
+                shutil.rmtree(f"{file_session}/{i}.session", ignore_errors=True)
+            else:
+                directory = f"{i}"
+                parent = f"{file_session}/"
+                path = pth.join(parent, directory)
+                shutil.rmtree(path, ignore_errors=True)
+            number_proxy = number_proxy + 1 if number_proxy < len(proxies) - 1 else 0
     d = list
     print(f"Day la list {list}")
-    with open('phone_messenge/%s' % file_phone, "w") as l:
+    with open('phone_old/%s' % file_phone, "w") as l:
         dump(d, l)
     input(bcolors.OKCYAN+"\nThe list is updated\n"+bcolors.ENDC)
     print("DONE")
-    return
+    return "DONE"
 
 check_ban()
