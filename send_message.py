@@ -75,12 +75,12 @@ async def __main__(_list_phone, _proxies):
                     number_proxy = number_proxy + 1 if number_proxy < len(_proxies) - 1 else 0
                     number_row = number_row + 1 if number_row < len(rows) - 1 else 0
                     await client.disconnect()
-                    sleep(timeout)
+                    sleep(float(timeout))
             except Exception as e:
                 print('%s Something Error: %s' % (_list_phone[num], e))
                 num = 0 if num == len(_list_phone) - 1 else num + 1
-                number_row = number_row + 1 if number_row < len(rows) - 1 else 0
                 number_proxy = number_proxy + 1 if number_proxy < len(_proxies) - 1 else 0
+                number_row = number_row + 1 if number_row < len(rows) - 1 else 0
 
 loop = asyncio.new_event_loop()
 loop.run_until_complete(__main__(list_phone,proxies))
