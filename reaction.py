@@ -103,7 +103,7 @@ async def __main__(_list_phone, _proxies):
         get_proxy = _proxies[number_proxy]
         try:
             if file_session == 'fanpad':
-                client = Client(tele_to_pyro("%s/%s.session" % (file_session, phone)), api_id, api_hash,proxy=dict(scheme='socks5', hostname=get_proxy['ip'], port=int(get_proxy['port']), username=get_proxy['user'], password=get_proxy['password']))
+                client = Client("%s" % (phone), api_id, api_hash,proxy=dict(scheme='socks5', hostname=get_proxy['ip'], port=int(get_proxy['port']), username=get_proxy['user'], password=get_proxy['password']))
             else:
                 client = Client("%s/%s/%s.session" % (file_session, phone, phone), api_id, api_hash,
                                         proxy=(python_socks.ProxyType.SOCKS5, get_proxy['ip'], get_proxy['port'], True,
